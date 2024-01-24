@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weebney.com</title>
+
+    <link rel="stylesheet" href="reset.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    html {
+        height: 100vh;
+        width: 100vw;
+        cursor: url('./images/cursor.png'), default;
+    }
+
+    ::selection {
+        background: #000000;
+        color: #ffffff;
+    }
+
+    body {
+        font-family: 'Fragment Mono', monospace;
+        background-color: white;
+    }
+
+    h1 {
+        color: #ffffff;
+        font-size: 128px;
+        mix-blend-mode: difference;
+
+        font-weight: bold;
+    }
+
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+        width: 100%;
+    }
+
+    li {
+        list-style-type: none;
+        list-style-position: outside;
+        font-size: 32px;
+        margin: 0.2em;
+    }
+
+    li>a {
+        font-size: 48px;
+        padding: 0.2em;
+
+        color: #000000;
+
+        cursor: url('./images/cursor_select.gif'), pointer;
+
+        text-decoration: none;
+    }
+
+    li:hover {
+        list-style-type: "";
+    }
+
+    li>a:hover {
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    #main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    #sub {
+        display: grid;
+        grid-template-rows: auto 1fr;
+
+    }
+</style>
+
+<style>
+    #modal {
+        text-align: center;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 1em;
+        padding: 2em;
+
+        z-index: 10000000000000000;
+
+        text-wrap: pretty;
+        max-width: 69vw;
+        text-align: justify;
+        line-height: 1.3em;
+
+        pointer-events: all;
+
+        display: none;
+    }
+
+
+    #modalholder {
+        position: absolute;
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+
+        pointer-events: none;
+    }
+
+    #exit {
+        width: 100%;
+        text-align: right;
+        font-size: 48px;
+        padding: 0.2em;
+        color: #000000;
+    }
+
+    a:visited {
+        color: inherit;
+    }
+
+    a {
+        color: #000000;
+        cursor: url('./images/cursor_select.gif'), pointer;
+    }
+</style>
+
+<body>
+    <div id="modalholder">
+
+        <div id="modal">
+            <div id="exit">
+                <a href="#" onclick="closeModal()">x</a>
+            </div>
+            <div>
+                <br>
+                <p id="contact_p">
+                    You can email me at: <br>
+                    <span style="background-color: #000000; color: white;padding:0.5em;line-height: 2.5em;">w &lt;at&gt;
+                        freeassn &lt;dot&gt; org</span><br>
+                    <br>
+                    <br>
+                    You can also find me on the following websites: <br>
+                    - <a href="http://github.com/weebney" target="_blank">github</a> <br>
+                    - <a href="http://x.com/weebney" target="_blank">twitter</a>
+                </p>
+
+                <p id="cv_p">
+                    My Curriculum Vitae is currently only available by request. <br>
+                    Shoot me an email if you want to take a look—sorry!
+                </p>
+
+                <p id="bio_p">
+                    Howdy, I'm W. Weebney <br> <br>
+                    I was a successful sales and marketing guru for many years. <br>
+                    These days, I study computers at Arizona State University and <br>
+                    work on open-source software.
+                </p>
+                <br>
+            </div>
+        </div>
+
+    </div>
+
+    <section id="main">
+        <div id="sub">
+            <div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1>weebney</h1>
+            </div>
+            <div>
+                <ul>
+                    <li id="software">
+                        <a href="https://github.com/weebney" target="_blank">Software</a>
+                    </li>
+
+                    <li id="music">
+                        <a href="https://sc.fm/" target="_blank">Music</a>
+                    </li>
+
+                    <li id="blog">
+                        <a href="https://e-e.sh/" target="_blank">Blog</a>
+                    </li>
+
+                    <li id="bio">
+                        <a onclick="showBio()">Bio</a>
+                    </li>
+
+                    <li id="cv">
+                        <a onclick="showCV()">CV</a>
+                    </li>
+
+                    <li id="mail">
+                        <a onclick="showContact()">📫</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+    const m = document.getElementById("modal")
+    const mh = document.getElementById("modalholder")
+    const contactp = document.getElementById("contact_p")
+    const cvp = document.getElementById("cv_p")
+    const biop = document.getElementById("bio_p")
+
+
+    function closeModal() {
+        modalOpen = !modalOpen
+        m.style.display = "none";
+        mh.style.pointerEvents = "none"
+        resetBackground()
+    }
+
+    function showContact() {
+        modalOpen = !modalOpen
+        mh.style.pointerEvents = "auto"
+
+        mailSetBackground
+        cvp.style.display = "none";
+        biop.style.display = "none";
+        contactp.style.display = "unset";
+        m.style.display = "unset";
+    }
+
+    function showCV() {
+        modalOpen = !modalOpen
+        mh.style.pointerEvents = "auto"
+
+        cvSetBackground
+        biop.style.display = "none";
+        contactp.style.display = "none";
+        cvp.style.display = "unset";
+        m.style.display = "unset";
+    }
+
+    function showBio() {
+        modalOpen = !modalOpen
+        mh.style.pointerEvents = "auto"
+
+        bioSetBackground
+        contactp.style.display = "none";
+        cvp.style.display = "none";
+        biop.style.display = "unset";
+        m.style.display = "unset";
+    }
+</script>
+
+<script defer>
+    const software = document.getElementById("software")
+    const music = document.getElementById("music")
+    const blog = document.getElementById("blog")
+    const bio = document.getElementById("bio")
+    const cv = document.getElementById("cv")
+    const mail = document.getElementById("mail")
+
+    var modalOpen = false
+
+    const resetBackground = () => {
+
+        if (modalOpen === true) {
+            console.log(modalOpen)
+            return
+        }
+        document.body.style.backgroundImage = "unset";
+        software.style.opacity = 100;
+        music.style.opacity = 100;
+        blog.style.opacity = 100;
+        bio.style.opacity = 100;
+        cv.style.opacity = 100;
+        mail.style.opacity = 100;
+    }
+
+    software.addEventListener("mouseover", () => {
+        music.style.opacity = 0;
+        blog.style.opacity = 0;
+        bio.style.opacity = 0;
+        cv.style.opacity = 0;
+        mail.style.opacity = 0;
+        document.body.style.backgroundImage = "url('./images/hacker.gif')";
+    }, "passive")
+    software.addEventListener("mouseout", resetBackground, "passive")
+
+    music.addEventListener("mouseover", () => {
+        software.style.opacity = 0;
+        blog.style.opacity = 0;
+        bio.style.opacity = 0;
+        cv.style.opacity = 0;
+        mail.style.opacity = 0;
+        document.body.style.backgroundImage = "url('./images/rave.gif')";
+    }, "passive")
+    music.addEventListener("mouseout", resetBackground, "passive")
+
+    blog.addEventListener("mouseover", () => {
+        software.style.opacity = 0;
+        music.style.opacity = 0;
+        bio.style.opacity = 0;
+        cv.style.opacity = 0;
+        mail.style.opacity = 0;
+        document.body.style.backgroundImage = "url('./images/writing.gif')";
+    }, "passive")
+    blog.addEventListener("mouseout", resetBackground, "passive")
+
+
+    const bioSetBackground = () => {
+        software.style.opacity = 0;
+        music.style.opacity = 0;
+        blog.style.opacity = 0;
+        cv.style.opacity = 0;
+        mail.style.opacity = 0;
+        document.body.style.backgroundImage = "url('./images/whome.gif')";
+    }
+    bio.addEventListener("mouseover", bioSetBackground, "passive")
+    bio.addEventListener("mouseout", resetBackground, "passive")
+
+
+    const cvSetBackground = () => {
+        software.style.opacity = 0;
+        music.style.opacity = 0;
+        blog.style.opacity = 0;
+        bio.style.opacity = 0;
+        mail.style.opacity = 0;
+        document.body.style.backgroundImage = "url('./images/raccoon.gif')";
+    }
+    cv.addEventListener("mouseover", cvSetBackground, "passive")
+    cv.addEventListener("mouseout", resetBackground, "passive")
+
+    const mailSetBackground = () => {
+        software.style.opacity = 0;
+        music.style.opacity = 0;
+        blog.style.opacity = 0;
+        bio.style.opacity = 0;
+        cv.style.opacity = 0;
+        document.body.style.backgroundImage = "url('./images/mail.gif')";
+    }
+    mail.addEventListener("mouseover", mailSetBackground, "passive")
+    mail.addEventListener("mouseout", resetBackground, "passive")
+</script>
+
+</html>
