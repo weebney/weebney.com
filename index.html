@@ -95,11 +95,19 @@
         grid-template-rows: auto 1fr;
 
     }
+
+    @media screen and (max-width: 600px) {
+  h1 {
+    font-size: 80px;
+  }
+  li>a {
+    font-size:36px;
+  }
+}
 </style>
 
 <style>
     #modal {
-        text-align: center;
         background-color: white;
         border: 1px solid black;
         border-radius: 1em;
@@ -109,7 +117,7 @@
 
         text-wrap: pretty;
         max-width: 69vw;
-        text-align: justify;
+        text-align: left;
         line-height: 1.3em;
 
         pointer-events: all;
@@ -168,15 +176,13 @@
                 </p>
 
                 <p id="cv_p">
-                    My Curriculum Vitae is currently only available by request. <br>
-                    Shoot me an email if you want to take a look—sorry!
+                    Curriculum Vitae available only by request.
                 </p>
 
                 <p id="bio_p">
-                    Howdy, I'm W. Weebney <br> <br>
-                    I was a successful sales and marketing guru for many years. <br>
-                    These days, I study computers at Arizona State University and <br>
-                    work on open-source software.
+                    I was a successful sales and marketing guru for many years.
+                    These days, I study electronics at Arizona State University
+                    and work on open-source software.
                 </p>
                 <br>
             </div>
@@ -228,143 +234,63 @@
 </body>
 
 <script>
-    const m = document.getElementById("modal")
-    const mh = document.getElementById("modalholder")
-    const contactp = document.getElementById("contact_p")
-    const cvp = document.getElementById("cv_p")
-    const biop = document.getElementById("bio_p")
+    const m = document.getElementById("modal");
+    const mh = document.getElementById("modalholder");
+    const contactp = document.getElementById("contact_p");
+    const cvp = document.getElementById("cv_p");
+    const biop = document.getElementById("bio_p");
+    const software = document.getElementById("software");
+    const music = document.getElementById("music");
+    const blog = document.getElementById("blog");
+    const bio = document.getElementById("bio");
+    const cv = document.getElementById("cv");
+    const mail = document.getElementById("mail");
 
+    let modalOpen = false;
 
     function closeModal() {
-        modalOpen = !modalOpen
+        modalOpen = false;
         m.style.display = "none";
-        mh.style.pointerEvents = "none"
-        resetBackground()
+        mh.style.pointerEvents = "none";
+        resetBackground();
     }
 
-    function showContact() {
-        modalOpen = !modalOpen
-        mh.style.pointerEvents = "auto"
-
-        mailSetBackground
-        cvp.style.display = "none";
-        biop.style.display = "none";
-        contactp.style.display = "unset";
+    function showContent(content) {
+        modalOpen = true;
+        mh.style.pointerEvents = "auto";
+        contactp.style.display = content === "contact" ? "unset" : "none";
+        cvp.style.display = content === "cv" ? "unset" : "none";
+        biop.style.display = content === "bio" ? "unset" : "none";
         m.style.display = "unset";
     }
 
-    function showCV() {
-        modalOpen = !modalOpen
-        mh.style.pointerEvents = "auto"
-
-        cvSetBackground
-        biop.style.display = "none";
-        contactp.style.display = "none";
-        cvp.style.display = "unset";
-        m.style.display = "unset";
-    }
-
-    function showBio() {
-        modalOpen = !modalOpen
-        mh.style.pointerEvents = "auto"
-
-        bioSetBackground
-        contactp.style.display = "none";
-        cvp.style.display = "none";
-        biop.style.display = "unset";
-        m.style.display = "unset";
-    }
-</script>
-
-<script defer>
-    const software = document.getElementById("software")
-    const music = document.getElementById("music")
-    const blog = document.getElementById("blog")
-    const bio = document.getElementById("bio")
-    const cv = document.getElementById("cv")
-    const mail = document.getElementById("mail")
-
-    var modalOpen = false
-
-    const resetBackground = () => {
-
-        if (modalOpen === true) {
-            console.log(modalOpen)
-            return
-        }
+    function resetBackground() {
+        if (modalOpen) return;
         document.body.style.backgroundImage = "unset";
-        software.style.opacity = 100;
-        music.style.opacity = 100;
-        blog.style.opacity = 100;
-        bio.style.opacity = 100;
-        cv.style.opacity = 100;
-        mail.style.opacity = 100;
+        [software, music, blog, bio, cv, mail].forEach(item => item.style.opacity = 1);
     }
 
-    software.addEventListener("mouseover", () => {
-        music.style.opacity = 0;
-        blog.style.opacity = 0;
-        bio.style.opacity = 0;
-        cv.style.opacity = 0;
-        mail.style.opacity = 0;
-        document.body.style.backgroundImage = "url('./images/hacker.gif')";
-    }, "passive")
-    software.addEventListener("mouseout", resetBackground, "passive")
-
-    music.addEventListener("mouseover", () => {
-        software.style.opacity = 0;
-        blog.style.opacity = 0;
-        bio.style.opacity = 0;
-        cv.style.opacity = 0;
-        mail.style.opacity = 0;
-        document.body.style.backgroundImage = "url('./images/rave.gif')";
-    }, "passive")
-    music.addEventListener("mouseout", resetBackground, "passive")
-
-    blog.addEventListener("mouseover", () => {
-        software.style.opacity = 0;
-        music.style.opacity = 0;
-        bio.style.opacity = 0;
-        cv.style.opacity = 0;
-        mail.style.opacity = 0;
-        document.body.style.backgroundImage = "url('./images/writing.gif')";
-    }, "passive")
-    blog.addEventListener("mouseout", resetBackground, "passive")
-
-
-    const bioSetBackground = () => {
-        software.style.opacity = 0;
-        music.style.opacity = 0;
-        blog.style.opacity = 0;
-        cv.style.opacity = 0;
-        mail.style.opacity = 0;
-        document.body.style.backgroundImage = "url('./images/whome.gif')";
+    function setBackground(url) {
+        [software, music, blog, bio, cv, mail].forEach(item => item.style.opacity = item === this ? 1 : 0);
+        document.body.style.backgroundImage = `url('${url}')`;
     }
-    bio.addEventListener("mouseover", bioSetBackground, "passive")
-    bio.addEventListener("mouseout", resetBackground, "passive")
 
-
-    const cvSetBackground = () => {
-        software.style.opacity = 0;
-        music.style.opacity = 0;
-        blog.style.opacity = 0;
-        bio.style.opacity = 0;
-        mail.style.opacity = 0;
-        document.body.style.backgroundImage = "url('./images/raccoon.gif')";
+    function addEvents(element, events, handler) {
+        events.forEach(event => element.addEventListener(event, handler, { passive: true }));
     }
-    cv.addEventListener("mouseover", cvSetBackground, "passive")
-    cv.addEventListener("mouseout", resetBackground, "passive")
 
-    const mailSetBackground = () => {
-        software.style.opacity = 0;
-        music.style.opacity = 0;
-        blog.style.opacity = 0;
-        bio.style.opacity = 0;
-        cv.style.opacity = 0;
-        document.body.style.backgroundImage = "url('./images/mail.gif')";
-    }
-    mail.addEventListener("mouseover", mailSetBackground, "passive")
-    mail.addEventListener("mouseout", resetBackground, "passive")
+    addEvents(software, ["mouseover", "touchstart"], () => setBackground.call(software, './images/hacker.gif'));
+    addEvents(music, ["mouseover", "touchstart"], () => setBackground.call(music, './images/rave.gif'));
+    addEvents(blog, ["mouseover", "touchstart"], () => setBackground.call(blog, './images/writing.gif'));
+    addEvents(bio, ["mouseover", "touchstart"], () => setBackground.call(bio, './images/whome.gif'));
+    addEvents(cv, ["mouseover", "touchstart"], () => setBackground.call(cv, './images/raccoon.gif'));
+    addEvents(mail, ["mouseover", "touchstart"], () => setBackground.call(mail, './images/mail.gif'));
+
+    [software, music, blog, bio, cv, mail].forEach(item => addEvents(item, ["mouseout", "touchend"], resetBackground));
+
+    bio.addEventListener("click", () => showContent("bio"));
+    cv.addEventListener("click", () => showContent("cv"));
+    mail.addEventListener("click", () => showContent("contact"));
 </script>
 
 </html>
