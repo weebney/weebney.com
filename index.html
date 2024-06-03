@@ -266,11 +266,11 @@
     function resetBackground() {
         if (modalOpen) return;
         document.body.style.backgroundImage = "unset";
-        [software, blog, bio, cv, mail].forEach(item => item.style.opacity = 1);
+        [software, blog, bio, cv, music, mail].forEach(item => item.style.opacity = 1);
     }
 
     function setBackground(url) {
-        [software, blog, bio, cv, mail].forEach(item => item.style.opacity = item === this ? 1 : 0);
+        [software, blog, bio, cv, music, mail].forEach(item => item.style.opacity = item === this ? 1 : 0);
         document.body.style.backgroundImage = `url('${url}')`;
     }
 
@@ -279,13 +279,13 @@
     }
 
     addEvents(software, ["mouseover", "touchstart"], () => setBackground.call(software, './images/hacker.gif'));
-    // addEvents(music, ["mouseover", "touchstart"], () => setBackground.call(music, './images/rave.gif'));
+    addEvents(music, ["mouseover", "touchstart"], () => setBackground.call(music, './images/rave.gif'));
     addEvents(blog, ["mouseover", "touchstart"], () => setBackground.call(blog, './images/writing.gif'));
     addEvents(bio, ["mouseover", "touchstart"], () => setBackground.call(bio, './images/whome.gif'));
     addEvents(cv, ["mouseover", "touchstart"], () => setBackground.call(cv, './images/raccoon.gif'));
     addEvents(mail, ["mouseover", "touchstart"], () => setBackground.call(mail, './images/mail.gif'));
 
-    [software, blog, bio, cv, mail].forEach(item => addEvents(item, ["mouseout", "touchend"], resetBackground));
+    [software, blog, bio, cv, music, mail].forEach(item => addEvents(item, ["mouseout", "touchend"], resetBackground));
 
     bio.addEventListener("click", () => showContent("bio"));
     cv.addEventListener("click", () => showContent("cv"));
