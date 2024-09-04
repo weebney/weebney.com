@@ -1,296 +1,336 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>weebney.com</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>weebney.com</title>
+        <link rel="stylesheet" href="reset.css" />
 
-    <link rel="stylesheet" href="reset.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap"
+            rel="stylesheet"
+        />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+        <link rel="preload" href="./images/cursor.png" as="image" />
+        <link rel="preload" href="./images/cursor_select.gif" as="image" />
+        <link rel="preload" href="./images/hacker.gif" as="image" />
+        <link rel="preload" href="./images/mail.gif" as="image" />
+        <link rel="preload" href="./images/raccoon.gif" as="image" />
+        <link rel="preload" href="./images/rave.gif" as="image" />
+        <link rel="preload" href="./images/whome.gif" as="image" />
+        <link rel="preload" href="./images/writing.gif" as="image" />
+    </head>
 
-    <link rel="preload" href="./images/cursor.png" as="image">
-    <link rel="preload" href="./images/cursor_select.gif" as="image">
-    <link rel="preload" href="./images/hacker.gif" as="image">
-    <link rel="preload" href="./images/mail.gif" as="image">
-    <link rel="preload" href="./images/raccoon.gif" as="image">
-    <link rel="preload" href="./images/rave.gif" as="image">
-    <link rel="preload" href="./images/whome.gif" as="image">
-    <link rel="preload" href="./images/writing.gif" as="image">
+    <style>
+        html {
+            height: 100vh;
+            width: 100vw;
+            cursor: url("./images/cursor.png"), default;
+        }
 
-</head>
+        ::selection {
+            background: #000000;
+            color: #ffffff;
+        }
 
-<style>
-    html {
-        height: 100vh;
-        width: 100vw;
-        cursor: url('./images/cursor.png'), default;
-    }
+        body {
+            font-family: "Fragment Mono", monospace;
+            background-color: white;
+        }
 
-    ::selection {
-        background: #000000;
-        color: #ffffff;
-    }
+        h1 {
+            color: #ffffff;
+            font-size: 128px;
+            mix-blend-mode: difference;
 
-    body {
-        font-family: 'Fragment Mono', monospace;
-        background-color: white;
-    }
+            font-weight: bold;
+        }
 
-    h1 {
-        color: #ffffff;
-        font-size: 128px;
-        mix-blend-mode: difference;
+        ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+            width: 100%;
+        }
 
-        font-weight: bold;
-    }
+        li {
+            list-style-type: none;
+            list-style-position: outside;
+            font-size: 32px;
+            margin: 0.2em;
+        }
 
-    ul {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-flow: column;
-        width: 100%;
-    }
+        li > a {
+            font-size: 48px;
+            padding: 0.2em;
 
-    li {
-        list-style-type: none;
-        list-style-position: outside;
-        font-size: 32px;
-        margin: 0.2em;
-    }
+            color: #000000;
 
-    li>a {
-        font-size: 48px;
-        padding: 0.2em;
+            cursor: url("./images/cursor_select.gif"), pointer;
 
-        color: #000000;
+            text-decoration: none;
+        }
 
-        cursor: url('./images/cursor_select.gif'), pointer;
+        li:hover {
+            list-style-type: "";
+        }
 
-        text-decoration: none;
-    }
+        li > a:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
 
-    li:hover {
-        list-style-type: "";
-    }
+        #main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    li>a:hover {
-        background-color: #000000;
-        color: #ffffff;
-    }
+        #sub {
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
 
-    #main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 80px;
+            }
+            li > a {
+                font-size: 36px;
+            }
 
-    #sub {
-        display: grid;
-        grid-template-rows: auto 1fr;
+            #modal {
+                text-wrap: pretty;
+                max-width: 90vw;
+                text-align: left;
+                line-height: 1.5em;
+            }
+        }
 
-    }
+        #modal {
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 1em;
+            padding: 2em;
 
-    @media screen and (max-width: 600px) {
-  h1 {
-    font-size: 80px;
-  }
-  li>a {
-    font-size:36px;
-  }
-}
-</style>
+            z-index: 10000000000000000;
 
-<style>
-    #modal {
-        background-color: white;
-        border: 1px solid black;
-        border-radius: 1em;
-        padding: 2em;
+            text-wrap: pretty;
+            max-width: 33vw;
+            text-align: left;
+            line-height: 1.5em;
 
-        z-index: 10000000000000000;
+            pointer-events: all;
 
-        text-wrap: pretty;
-        max-width: 69vw;
-        text-align: left;
-        line-height: 1.3em;
+            display: none;
+        }
 
-        pointer-events: all;
+        #modalholder {
+            position: absolute;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
 
-        display: none;
-    }
+            pointer-events: none;
+        }
 
+        #exit {
+            width: 100%;
+            text-align: right;
+            font-size: 48px;
+            padding: 0.2em;
+            color: #000000;
+        }
 
-    #modalholder {
-        position: absolute;
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
+        a:visited {
+            color: inherit;
+        }
 
-        pointer-events: none;
-    }
+        a {
+            color: #000000;
+            cursor: url("./images/cursor_select.gif"), pointer;
+        }
+    </style>
 
-    #exit {
-        width: 100%;
-        text-align: right;
-        font-size: 48px;
-        padding: 0.2em;
-        color: #000000;
-    }
+    <body>
+        <div id="modalholder">
+            <div id="modal">
+                <div id="exit">
+                    <a href="#" onclick="closeModal()">x</a>
+                </div>
+                <div>
+                    <br />
+                    <p id="contact_p">
+                        You can email me at: <br />
+                        <span
+                            style="
+                                background-color: #000000;
+                                color: white;
+                                padding: 0.5em;
+                                line-height: 2.5em;
+                            "
+                            >w &lt;at&gt; freeassn &lt;dot&gt; org</span
+                        ><br />
+                        <br />
+                        <br />
+                        You can also find me on the following websites: <br />
+                        -
+                        <a href="http://github.com/weebney" target="_blank"
+                            >github</a
+                        >
+                        <br />
+                        -
+                        <a href="http://x.com/weebney" target="_blank"
+                            >twitter</a
+                        >
+                    </p>
 
-    a:visited {
-        color: inherit;
-    }
+                    <p id="cv_p">CV available by request.</p>
 
-    a {
-        color: #000000;
-        cursor: url('./images/cursor_select.gif'), pointer;
-    }
-</style>
-
-<body>
-    <div id="modalholder">
-
-        <div id="modal">
-            <div id="exit">
-                <a href="#" onclick="closeModal()">x</a>
-            </div>
-            <div>
-                <br>
-                <p id="contact_p">
-                    You can email me at: <br>
-                    <span style="background-color: #000000; color: white;padding:0.5em;line-height: 2.5em;">w &lt;at&gt;
-                        freeassn &lt;dot&gt; org</span><br>
-                    <br>
-                    <br>
-                    You can also find me on the following websites: <br>
-                    - <a href="http://github.com/weebney" target="_blank">github</a> <br>
-                    - <a href="http://x.com/weebney" target="_blank">twitter</a>
-                </p>
-
-                <p id="cv_p">
-                    CV available by request.
-                </p>
-
-                <p id="bio_p">
-                    I was a consultant for a while.
-                    These days, I work on open-source software.
-                </p>
-                <br>
-            </div>
-        </div>
-
-    </div>
-
-    <section id="main">
-        <div id="sub">
-            <div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <h1>weebney</h1>
-            </div>
-            <div>
-                <ul>
-                    <li id="software">
-                        <a href="https://github.com/weebney" target="_blank">Software</a>
-                    </li>
-
-                    <!-- This guy is hidden -->
-                    <li id="music" style="display:none;">
-                        <a href="#" target="_blank">Music</a>
-                    </li>
-
-                    <li id="blog">
-                        <a href="https://e-e.sh/blog" target="_blank">Blog</a>
-                    </li>
-
-                    <li id="bio">
-                        <a onclick="showBio()">Bio</a>
-                    </li>
-
-                    <li id="cv">
-                        <a onclick="showCV()">CV</a>
-                    </li>
-
-                    <li id="mail">
-                        <a onclick="showContact()">📫</a>
-                    </li>
-                </ul>
+                    <p id="bio_p">
+                        <span>
+                            I was a consultant for a while.<br />
+                            These days, I work on open-source software and study
+                            ergonomics at Arizona State University.
+                        </span>
+                    </p>
+                    <br />
+                </div>
             </div>
         </div>
-    </section>
-</body>
 
-<script>
-    const m = document.getElementById("modal");
-    const mh = document.getElementById("modalholder");
-    const contactp = document.getElementById("contact_p");
-    const cvp = document.getElementById("cv_p");
-    const biop = document.getElementById("bio_p");
-    const software = document.getElementById("software");
-    const music = document.getElementById("music");
-    const blog = document.getElementById("blog");
-    const bio = document.getElementById("bio");
-    const cv = document.getElementById("cv");
-    const mail = document.getElementById("mail");
+        <section id="main">
+            <div id="sub">
+                <div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <h1>weebney</h1>
+                </div>
+                <div>
+                    <ul>
+                        <li id="software">
+                            <a href="https://github.com/weebney" target="_blank"
+                                >Software</a
+                            >
+                        </li>
 
-    let modalOpen = false;
+                        <!-- This guy is hidden -->
+                        <li id="music" style="display: none">
+                            <a href="#" target="_blank">Music</a>
+                        </li>
 
-    function closeModal() {
-        modalOpen = false;
-        m.style.display = "none";
-        mh.style.pointerEvents = "none";
-        resetBackground();
-    }
+                        <li id="blog">
+                            <a href="https://e-e.sh/blog" target="_blank"
+                                >Blog</a
+                            >
+                        </li>
 
-    function showContent(content) {
-        modalOpen = true;
-        mh.style.pointerEvents = "auto";
-        contactp.style.display = content === "contact" ? "unset" : "none";
-        cvp.style.display = content === "cv" ? "unset" : "none";
-        biop.style.display = content === "bio" ? "unset" : "none";
-        m.style.display = "unset";
-    }
+                        <li id="bio">
+                            <a>Bio</a>
+                        </li>
 
-    function resetBackground() {
-        if (modalOpen) return;
-        document.body.style.backgroundImage = "unset";
-        [software, blog, bio, cv, music, mail].forEach(item => item.style.opacity = 1);
-    }
+                        <li id="cv">
+                            <a>CV</a>
+                        </li>
 
-    function setBackground(url) {
-        [software, blog, bio, cv, music, mail].forEach(item => item.style.opacity = item === this ? 1 : 0);
-        document.body.style.backgroundImage = `url('${url}')`;
-    }
+                        <li id="mail">
+                            <a>📫</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </body>
 
-    function addEvents(element, events, handler) {
-        events.forEach(event => element.addEventListener(event, handler, { passive: true }));
-    }
+    <script>
+        const m = document.getElementById("modal");
+        const mh = document.getElementById("modalholder");
+        const contactp = document.getElementById("contact_p");
+        const cvp = document.getElementById("cv_p");
+        const biop = document.getElementById("bio_p");
+        const software = document.getElementById("software");
+        const music = document.getElementById("music");
+        const blog = document.getElementById("blog");
+        const bio = document.getElementById("bio");
+        const cv = document.getElementById("cv");
+        const mail = document.getElementById("mail");
 
-    addEvents(software, ["mouseover", "touchstart"], () => setBackground.call(software, './images/hacker.gif'));
-    addEvents(music, ["mouseover", "touchstart"], () => setBackground.call(music, './images/rave.gif'));
-    addEvents(blog, ["mouseover", "touchstart"], () => setBackground.call(blog, './images/writing.gif'));
-    addEvents(bio, ["mouseover", "touchstart"], () => setBackground.call(bio, './images/whome.gif'));
-    addEvents(cv, ["mouseover", "touchstart"], () => setBackground.call(cv, './images/raccoon.gif'));
-    addEvents(mail, ["mouseover", "touchstart"], () => setBackground.call(mail, './images/mail.gif'));
+        let modalOpen = false;
 
-    [software, blog, bio, cv, music, mail].forEach(item => addEvents(item, ["mouseout", "touchend"], resetBackground));
+        function closeModal() {
+            modalOpen = false;
+            m.style.display = "none";
+            mh.style.pointerEvents = "none";
+            resetBackground();
+        }
 
-    bio.addEventListener("click", () => showContent("bio"));
-    cv.addEventListener("click", () => showContent("cv"));
-    mail.addEventListener("click", () => showContent("contact"));
-</script>
+        function showContent(content) {
+            modalOpen = true;
+            mh.style.pointerEvents = "auto";
+            contactp.style.display = content === "contact" ? "unset" : "none";
+            cvp.style.display = content === "cv" ? "unset" : "none";
+            biop.style.display = content === "bio" ? "unset" : "none";
+            m.style.display = "unset";
+        }
 
+        function resetBackground() {
+            if (modalOpen) return;
+            document.body.style.backgroundImage = "unset";
+            [software, blog, bio, cv, music, mail].forEach(
+                (item) => (item.style.opacity = 1),
+            );
+        }
+
+        function setBackground(url) {
+            [software, blog, bio, cv, music, mail].forEach(
+                (item) => (item.style.opacity = item === this ? 1 : 0),
+            );
+            document.body.style.backgroundImage = `url('${url}')`;
+        }
+
+        function addEvents(element, events, handler) {
+            events.forEach((event) =>
+                element.addEventListener(event, handler, { passive: true }),
+            );
+        }
+
+        addEvents(software, ["mouseover", "touchstart"], () =>
+            setBackground.call(software, "./images/hacker.gif"),
+        );
+        addEvents(music, ["mouseover", "touchstart"], () =>
+            setBackground.call(music, "./images/rave.gif"),
+        );
+        addEvents(blog, ["mouseover", "touchstart"], () =>
+            setBackground.call(blog, "./images/writing.gif"),
+        );
+        addEvents(bio, ["mouseover", "touchstart"], () =>
+            setBackground.call(bio, "./images/whome.gif"),
+        );
+        addEvents(cv, ["mouseover", "touchstart"], () =>
+            setBackground.call(cv, "./images/raccoon.gif"),
+        );
+        addEvents(mail, ["mouseover", "touchstart"], () =>
+            setBackground.call(mail, "./images/mail.gif"),
+        );
+
+        [software, blog, bio, cv, music, mail].forEach((item) =>
+            addEvents(item, ["mouseout", "touchend"], resetBackground),
+        );
+
+        bio.addEventListener("click", () => showContent("bio"));
+        cv.addEventListener("click", () => showContent("cv"));
+        mail.addEventListener("click", () => showContent("contact"));
+    </script>
 </html>

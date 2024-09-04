@@ -1,1 +1,1 @@
-# weebney-website
+# weebney.com
